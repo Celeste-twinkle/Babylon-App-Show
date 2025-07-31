@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <icon href="./favicon.ico" type="image/x-icon" />
+    <title>Babylon.js 3D 编辑器</title>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            background:
+                linear-gradient(45deg, rgba(0, 0, 0, 0.4) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.4) 75%),
+                linear-gradient(45deg, rgba(0, 0, 0, 0.4) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.4) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+
+        canvas {
+            height: 100vh;
+            width: 100%;
+            outline: none;
+            display: block;
+        }
+
+        .button-container {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            display: flex;
+            flex-direction: column;
+            z-index: 20;
+        }
+
+        button {
+            margin-bottom: 4px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .ui-layer {
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            width: 330px;
+            max-height: 90vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .ui-layer>* {
+            pointer-events: auto;
+        }
+
+        .tp-imgv.tp-imgv_area_root,
+        .tp-imgv_image {
+            max-height: none !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(241, 241, 241, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(100, 100, 100, 0.5);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(70, 70, 70, 0.7);
+        }
+
+        .loading {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            background: white;
+            z-index: 100;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <canvas id="mainCanvas"></canvas>
+        <div class="button-container">
+            <button id="btnDownload">下载配置</button>
+            <button id="btnUpload">上传配置</button>
+        </div>
+        <div id="uiLayer" class="ui-layer"></div>
+    </div>
+    <div id="loadingOverlay" class="loading">加载中...</div>
+
+    <script type="module">
+        // 动态导入 ES6 模块
+        import { MitaApp, createUILayer } from './Babylon-App/index.js';
+
+        // 全局变量
+        let mita;
+        let pane;
+        const observer = [];
+
+        // DOM 元素
+        const canvas = document.getElementById('mainCanvas');
+        const uiLayer = document.getElementById('uiLayer');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const btnDownload = document.getElementById('btnDownload');
+        const btnUpload = document.getElementById('btnUpload');
+
+        // Service Worker 注册
+        const registerServiceWorker = async () => {
+            try {
+                const registration = await navigator.serviceWorker.register('./sw.js', { scope: '/Babylon-App-Show/' });
+                console.log('ServiceWorker 注册成功:', registration);
+            } catch (error) {
+                console.error('ServiceWorker 注册失败:', error);
+            }
+        };
+
+        // 初始化 3D 应用
+        const initApp = async () => {
+            try {
+                await registerServiceWorker();
+
+                if (!canvas) throw new Error("Canvas 元素未找到");
+
+                // 创建 MitaApp 实例
+                mita = new MitaApp(canvas);
+                await mita.readyNext();
+
+                // 隐藏加载界面
+                loadingOverlay.classList.add('hidden');
+
+                // 初始化 UI 控制面板
+                if (uiLayer) {
+                    pane = await createUILayer(uiLayer, mita);
+                }
+
+                // 暴露到全局
+                window.mita = mita;
+                window.observer = observer;
+
+            } catch (error) {
+                console.error("应用初始化失败:", error);
+                loadingOverlay.textContent = `初始化失败: ${error.message}`;
+            }
+        };
+
+        // 下载配置功能
+        btnDownload.addEventListener('click', () => {
+            if (!mita) return;
+
+            const file = mita.getSettings();
+            const url = URL.createObjectURL(file);
+
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'settings.json';
+            document.body.appendChild(a);
+
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        });
+
+        // 上传配置功能
+        btnUpload.addEventListener('click', async () => {
+            if (!mita) return;
+
+            try {
+                // 现代浏览器文件选择 API
+                const [fileHandle] = await window.showOpenFilePicker({
+                    types: [{ description: 'JSON 配置', accept: { 'application/json': ['.json'] } }],
+                    multiple: false
+                });
+
+                const file = await fileHandle.getFile();
+
+                // 重置 UI
+                if (pane) {
+                    observer.forEach(fn => fn?.remove(true));
+                    observer.length = 0;
+                    pane.dispose();
+                    pane = null;
+                }
+
+                loadingOverlay.classList.remove('hidden');
+
+                // 应用新配置
+                await mita.setSettings(file);
+
+                // 重建 UI
+                if (uiLayer) {
+                    pane = await createUILayer(uiLayer, mita);
+                }
+
+                loadingOverlay.classList.add('hidden');
+
+            } catch (error) {
+                console.error('上传配置失败:', error);
+                if (error.name !== 'AbortError') {
+                    alert(`配置上传失败: ${error.message}`);
+                }
+            }
+        });
+
+        // 启动应用
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
