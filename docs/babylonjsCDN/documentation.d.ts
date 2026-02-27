@@ -2342,8 +2342,7 @@ declare module BABYLON {
         onAfterRenderObservable: Observable<Scene>;
         /**
          * An event triggered after rendering the scene for an active camera (When scene.render is called this will be called after each camera)
-         * This is triggered for each "sub" camera in a Camera Rig unlike onAfterCameraRenderObservable
-         */
+         * This is triggered for each "sub" camera in a Camera Rig unlike onAfterCameraRenderObservable         */
         onAfterRenderCameraObservable: Observable<Camera>;
         private _onAfterRenderObserver;
         /** Sets a function to be executed after rendering this scene */
@@ -2377,8 +2376,7 @@ declare module BABYLON {
         set beforeCameraRender(callback: () => void);
         /**
          * An event triggered after rendering a camera
-         * This is triggered for the full rig Camera only unlike onAfterRenderCameraObservable
-         */
+         * This is triggered for the full rig Camera only unlike onAfterRenderCameraObservable         */
         onAfterCameraRenderObservable: Observable<Camera>;
         private _onAfterCameraRenderObserver;
         /** Sets a function to be executed after rendering a camera*/
@@ -5473,8 +5471,7 @@ declare module BABYLON {
          */
         get referenceSpace(): XRReferenceSpace;
         /**
-         * Set a new reference space and triggers the observable
-         */
+         * Set a new reference space and triggers the Observable         */
         set referenceSpace(newReferenceSpace: XRReferenceSpace);
         /**
          * The mode for the managed XR session
@@ -16296,8 +16293,7 @@ declare module BABYLON {
         stencil: boolean;
     }
     /**
-     * This class is used by the onRenderingGroupObservable
-     */
+     * This class is used by the onRenderingGroupObservable     */
     export class RenderingGroupInfo {
         /**
          * The Scene that being rendered
@@ -17370,8 +17366,7 @@ declare module BABYLON {
         /**
          * Renders all the objects (meshes, particles systems, sprites) to the currently bound render target texture.
          * @param passIndex defines the pass index to use (default: 0)
-         * @param skipOnAfterRenderObservable defines a flag to skip raising the onAfterRenderObservable
-         */
+         * @param skipOnAfterRenderObservable defines a flag to skip raising the onAfterRenderObservable         */
         render(passIndex?: number, skipOnAfterRenderObservable?: boolean): void;
         /** @internal */
         _checkReadiness(): boolean;
@@ -22585,8 +22580,7 @@ declare module BABYLON {
         onActivateObservable: Observable<Camera>;
         private _onActivateObserver;
         /**
-         * A function that is added to the onActivateObservable
-         */
+         * A function that is added to the onActivateObservable         */
         set onActivate(callback: Nullable<(camera: Camera) => void>);
         /**
          * An event triggered when the postprocess changes its size.
@@ -22594,8 +22588,7 @@ declare module BABYLON {
         onSizeChangedObservable: Observable<PostProcess>;
         private _onSizeChangedObserver;
         /**
-         * A function that is added to the onSizeChangedObservable
-         */
+         * A function that is added to the onSizeChangedObservable         */
         set onSizeChanged(callback: (postProcess: PostProcess) => void);
         /**
          * An event triggered when the postprocess applies its effect.
@@ -22603,8 +22596,7 @@ declare module BABYLON {
         onApplyObservable: Observable<Effect>;
         private _onApplyObserver;
         /**
-         * A function that is added to the onApplyObservable
-         */
+         * A function that is added to the onApplyObservable         */
         set onApply(callback: (effect: Effect) => void);
         /**
          * An event triggered before rendering the postprocess
@@ -22612,8 +22604,7 @@ declare module BABYLON {
         onBeforeRenderObservable: Observable<Effect>;
         private _onBeforeRenderObserver;
         /**
-         * A function that is added to the onBeforeRenderObservable
-         */
+         * A function that is added to the onBeforeRenderObservable         */
         set onBeforeRender(callback: (effect: Effect) => void);
         /**
          * An event triggered after rendering the postprocess
@@ -22621,8 +22612,7 @@ declare module BABYLON {
         onAfterRenderObservable: Observable<Effect>;
         private _onAfterRenderObserver;
         /**
-         * A function that is added to the onAfterRenderObservable
-         */
+         * A function that is added to the onAfterRenderObservable         */
         set onAfterRender(callback: (efect: Effect) => void);
         /**
          * An event triggered when the post-process is disposed
@@ -28105,8 +28095,7 @@ declare module BABYLON {
         getGeometry(): object;
         /**
          * Returns an observable that will be notified for when a collision starts or continues for this PhysicsBody
-         * @returns Observable
-         */
+         * @returns Observable         */
         getCollisionObservable(): Observable<IPhysicsCollisionEvent>;
         /**
          * Returns an observable that will be notified when the body has finished colliding with another body
@@ -28115,13 +28104,11 @@ declare module BABYLON {
         getCollisionEndedObservable(): Observable<IBasePhysicsCollisionEvent>;
         /**
          * Enable or disable collision callback for this PhysicsBody.
-         * @param enabled true if PhysicsBody's collision will rise a collision event and notifies the observable
-         */
+         * @param enabled true if PhysicsBody's collision will rise a collision event and notifies the Observable         */
         setCollisionCallbackEnabled(enabled: boolean): void;
         /**
          * Enable or disable collision ended callback for this PhysicsBody.
-         * @param enabled true if PhysicsBody's collision ended will rise a collision event and notifies the observable
-         */
+         * @param enabled true if PhysicsBody's collision ended will rise a collision event and notifies the Observable         */
         setCollisionEndedCallbackEnabled(enabled: boolean): void;
         /**
          * Get the center of the object in world space.
@@ -28955,16 +28942,13 @@ declare module BABYLON {
          */
         name: string;
         /**
-         * Collision observable
-         */
+         * Collision Observable         */
         onCollisionObservable: Observable<IPhysicsCollisionEvent>;
         /**
-         * Collision ended observable
-         */
+         * Collision ended Observable         */
         onCollisionEndedObservable: Observable<IBasePhysicsCollisionEvent>;
         /**
-         * Trigger observable
-         */
+         * Trigger Observable         */
         onTriggerCollisionObservable: Observable<IBasePhysicsCollisionEvent>;
         setGravity(gravity: Vector3): void;
         setTimeStep(timeStep: number): void;
@@ -42087,8 +42071,7 @@ declare module BABYLON {
          */
         contextObservable: Observable<T>;
         /**
-         * Optional parameters when adding an observer to the observable
-         */
+         * Optional parameters when adding an observer to the Observable         */
         observableParameters?: {
             mask?: number;
             insertFirst?: boolean;
@@ -43882,14 +43865,12 @@ declare module BABYLON {
              */
             _coroutineSchedulerDispose?: () => void;
             /**
-             * Runs a coroutine asynchronously on this observable
-             * @param coroutine the iterator resulting from having started the coroutine
+             * Runs a coroutine asynchronously on this Observable             * @param coroutine the iterator resulting from having started the coroutine
              * @returns a promise which will be resolved when the coroutine finishes or rejected if the coroutine is cancelled
              */
             runCoroutineAsync(coroutine: AsyncCoroutine<void>): Promise<void>;
             /**
-             * Cancels all coroutines currently running on this observable
-             */
+             * Cancels all coroutines currently running on this Observable             */
             cancelAllCoroutines(): void;
         }
 
@@ -43985,8 +43966,7 @@ declare module BABYLON {
      */
     export interface IObserver {
         /**
-         * Remove the observer from its observable
-         * @param defer if true, the removal will be deferred to avoid callback skipping (default: false)
+         * Remove the observer from its Observable         * @param defer if true, the removal will be deferred to avoid callback skipping (default: false)
          */
         remove(defer?: boolean): void;
     }
@@ -44038,8 +44018,7 @@ declare module BABYLON {
          */
         scope?: any);
         /**
-         * Remove the observer from its observable
-         * This can be used instead of using the observable's remove function.
+         * Remove the observer from its Observable         * This can be used instead of using the observable's remove function.
          * @param defer if true, the removal will be deferred to avoid callback skipping (default: false)
          */
         remove(defer?: boolean): void;
@@ -44092,8 +44071,7 @@ declare module BABYLON {
          * Create an observable from a Promise.
          * @param promise a promise to observe for fulfillment.
          * @param onErrorObservable an observable to notify if a promise was rejected.
-         * @returns the new Observable
-         */
+         * @returns the new Observable         */
         static FromPromise<T, E = Error>(promise: Promise<T>, onErrorObservable?: Observable<E>): Observable<T>;
         /**
          * Gets the list of observers
@@ -44101,8 +44079,7 @@ declare module BABYLON {
          */
         get observers(): Array<Observer<T>>;
         /**
-         * Creates a new observable
-         * @param onObserverAdded defines a callback to call when a new observer is added
+         * Creates a new Observable         * @param onObserverAdded defines a callback to call when a new observer is added
          * @param notifyIfTriggered If set to true the observable will notify when an observer was added if the observable was already triggered.
          */
         constructor(onObserverAdded?: (observer: Observer<T>) => void, 
@@ -44134,15 +44111,13 @@ declare module BABYLON {
         /**
          * Remove an Observer from the Observable object
          * @param observer the instance of the Observer to remove
-         * @returns false if it doesn't belong to this Observable
-         */
+         * @returns false if it doesn't belong to this Observable         */
         remove(observer: Nullable<Observer<T>>): boolean;
         /**
          * Remove a callback from the Observable object
          * @param callback the callback to remove
          * @param scope optional scope. If used only the callbacks with this scope will be removed
-         * @returns false if it doesn't belong to this Observable
-         */
+         * @returns false if it doesn't belong to this Observable         */
         removeCallback(callback: (eventData: T, eventState: EventState) => void, scope?: any): boolean;
         /**
          * @internal
@@ -44191,9 +44166,7 @@ declare module BABYLON {
          */
         cleanLastNotifiedState(): void;
         /**
-         * Clone the current observable
-         * @returns a new observable
-         */
+         * Clone the current Observable         * @returns a new Observable         */
         clone(): Observable<T>;
         /**
          * Does this observable handles observer registered with a given mask
@@ -102182,8 +102155,7 @@ declare module BABYLON {
         rotationSnapDistance: number;
     }
     /**
-     * Dragging operation in observable
-     */
+     * Dragging operation in Observable     */
     export enum DragOperation {
         Rotation = 0,
         Scaling = 1
@@ -109290,8 +109262,7 @@ declare module BABYLON {
         _clearPendingBlocks(): void;
         /**
          * @internal
-         * Function that notifies the node executed observable
-         * @param node
+         * Function that notifies the node executed Observable         * @param node
          */
         _notifyExecuteNode(node: FlowGraphBlock): void;
         _notifyOnTick(framePayload: IFlowGraphOnTickEventPayload): void;
@@ -113137,8 +113108,7 @@ declare module BABYLON {
     }
     /**
      * This class is used to store pointer related info for the onPrePointerObservable event.
-     * Set the skipOnPointerObservable property to true if you want the engine to stop any process after this event is triggered, even not calling onPointerObservable
-     */
+     * Set the skipOnPointerObservable property to true if you want the engine to stop any process after this event is triggered, even not calling onPointerObservable     */
     export class PointerInfoPre extends PointerInfoBase {
         /**
          * Ray from a pointer if available (eg. 6dof controller)
@@ -113260,8 +113230,7 @@ declare module BABYLON {
     }
     /**
      * This class is used to store keyboard related info for the onPreKeyboardObservable event.
-     * Set the skipOnKeyboardObservable property to true if you want the engine to stop any process after this event is triggered, even not calling onKeyboardObservable
-     */
+     * Set the skipOnKeyboardObservable property to true if you want the engine to stop any process after this event is triggered, even not calling onKeyboardObservable     */
     export class KeyboardInfoPre extends KeyboardInfo {
         /**
          * Defines the type of event (KeyboardEventTypes)
@@ -130913,8 +130882,7 @@ declare module BABYLON {
         outputRenderTarget: Nullable<RenderTargetTexture>;
         /**
          * Observable triggered when the camera view matrix has changed.
-         * Beware of reentrance! Some methods like Camera.getViewMatrix and Camera.getWorldMatrix can trigger the onViewMatrixChangedObservable
-         * observable, so using them inside an observer will require additional logic to avoid a stack overflow error.
+         * Beware of reentrance! Some methods like Camera.getViewMatrix and Camera.getWorldMatrix can trigger the onViewMatrixChangedObservable         * observable, so using them inside an observer will require additional logic to avoid a stack overflow error.
          */
         onViewMatrixChangedObservable: Observable<Camera>;
         /**
@@ -131928,12 +131896,10 @@ declare module BABYLON {
          * Observable raised when exiting VR.
          */
         onExitingVRObservable: Observable<VRExperienceHelper>;
-        /** Return this.onEnteringVRObservable
-         * Note: This one is for backward compatibility. Please use onEnteringVRObservable directly
+        /** Return this.onEnteringVRObservable         * Note: This one is for backward compatibility. Please use onEnteringVRObservable directly
          */
         get onEnteringVR(): Observable<VRExperienceHelper>;
-        /** Return this.onExitingVRObservable
-         * Note: This one is for backward compatibility. Please use onExitingVRObservable directly
+        /** Return this.onExitingVRObservable         * Note: This one is for backward compatibility. Please use onExitingVRObservable directly
          */
         get onExitingVR(): Observable<VRExperienceHelper>;
         private _useCustomVRButton;
