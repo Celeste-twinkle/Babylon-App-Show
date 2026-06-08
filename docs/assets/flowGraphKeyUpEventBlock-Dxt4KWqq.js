@@ -1,0 +1,1 @@
+import{p as o}from"./index-Ci6NqJw7.js";import{F as r}from"./flowGraphKeyboardEventBlock-DygY91P4.js";class t extends r{constructor(e){super(e),this.type="KeyUp"}getClassName(){return"FlowGraphKeyUpEventBlock"}}o("FlowGraphKeyUpEventBlock",t);export{t as FlowGraphKeyUpEventBlock};
