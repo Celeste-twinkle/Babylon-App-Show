@@ -1,0 +1,21 @@
+<svg width="960" height="540" viewBox="0 0 960 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="540" fill="#111412"/>
+  <rect x="54" y="54" width="852" height="432" rx="14" fill="#F5F6F3"/>
+  <rect x="88" y="92" width="520" height="296" rx="10" fill="#171D1A"/>
+  <rect x="117" y="122" width="462" height="236" rx="8" fill="#25322D"/>
+  <path d="M316 198L443 270L316 342V198Z" fill="#DDEFE7"/>
+  <rect x="88" y="414" width="520" height="20" rx="10" fill="#DDE5DF"/>
+  <rect x="88" y="414" width="294" height="20" rx="10" fill="#23785B"/>
+  <rect x="642" y="92" width="230" height="68" rx="10" fill="#E3F4EC"/>
+  <rect x="642" y="184" width="230" height="68" rx="10" fill="#F0F3EE"/>
+  <rect x="642" y="276" width="230" height="68" rx="10" fill="#F0F3EE"/>
+  <rect x="642" y="390" width="230" height="44" rx="10" fill="#23785B"/>
+  <rect x="674" y="117" width="116" height="10" rx="5" fill="#23785B"/>
+  <rect x="674" y="139" width="152" height="8" rx="4" fill="#93B9A8"/>
+  <rect x="674" y="209" width="86" height="10" rx="5" fill="#65706B"/>
+  <rect x="674" y="231" width="164" height="8" rx="4" fill="#B8C4BE"/>
+  <rect x="674" y="301" width="142" height="10" rx="5" fill="#65706B"/>
+  <rect x="674" y="323" width="128" height="8" rx="4" fill="#B8C4BE"/>
+  <rect x="710" y="407" width="94" height="10" rx="5" fill="#FFFFFF"/>
+  <text x="88" y="478" fill="#2F3432" font-family="Arial, sans-serif" font-size="28" font-weight="700">Video PNG 3.0</text>
+</svg>
